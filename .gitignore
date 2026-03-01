@@ -1,0 +1,7 @@
+node_modules/
+build/
+*.node
+src/parser.c
+src/grammar.json
+src/tree_sitter/
+.scratch/

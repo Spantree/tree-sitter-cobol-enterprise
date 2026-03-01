@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install)",
+      "Bash(npm run *)",
+      "Bash(npx tree-sitter *)",
+      "Bash(node-gyp *)",
+      "Bash(node *)",
+      "Bash(git *)",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(mkdir *)"
+    ],
+    "deny": []
+  },
+  "enableTeamMode": true
+}
