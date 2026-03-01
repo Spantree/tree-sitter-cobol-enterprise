@@ -1,0 +1,40 @@
+{
+  "name": "tree-sitter-cobol-enterprise",
+  "version": "0.1.0",
+  "description": "Tree-sitter grammar for IBM Enterprise COBOL with EXEC CICS/SQL support",
+  "main": "bindings/node/index.js",
+  "scripts": {
+    "build": "node-gyp rebuild",
+    "test": "tree-sitter test",
+    "generate": "tree-sitter generate",
+    "validate": "node scripts/validate.js"
+  },
+  "keywords": [
+    "cobol",
+    "tree-sitter",
+    "parser",
+    "cics",
+    "db2",
+    "mainframe"
+  ],
+  "license": "Apache-2.0",
+  "dependencies": {
+    "nan": "^2.25.0"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.20.8"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.cobol",
+      "file-types": [
+        "cbl",
+        "CBL",
+        "cob",
+        "COB",
+        "cpy",
+        "CPY"
+      ]
+    }
+  ]
+}

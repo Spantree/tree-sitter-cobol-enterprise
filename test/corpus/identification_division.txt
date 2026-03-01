@@ -1,0 +1,55 @@
+================================================================================
+Simple program with PROGRAM-ID
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           DISPLAY 'HELLO'.
+           STOP RUN.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (procedure_division
+      (paragraph
+        (WORD))
+      (sentence
+        (display_statement
+          (string_literal)))
+      (sentence
+        (stop_statement)))))
+
+================================================================================
+Program with AUTHOR and DATE-WRITTEN
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       AUTHOR.     AWS.
+       DATE-WRITTEN. Jan 2023.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           STOP RUN.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD))
+      (author_paragraph
+        (comment_entry))
+      (date_written_paragraph
+        (comment_entry)))
+    (procedure_division
+      (paragraph
+        (WORD))
+      (sentence
+        (stop_statement)))))

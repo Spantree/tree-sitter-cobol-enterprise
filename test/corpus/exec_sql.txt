@@ -1,0 +1,68 @@
+================================================================================
+EXEC SQL SELECT with host variables
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           EXEC SQL
+                SELECT ACCT_ID
+                INTO :WS-ACCT-ID
+                FROM ACCOUNTS
+                WHERE ACCT_ID = :WS-INPUT-ID
+           END-EXEC.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (procedure_division
+      (paragraph
+        (WORD))
+      (sentence
+        (exec_sql_statement
+          (sql_select
+            (WORD)
+            (WORD)
+            (sql_host_variable
+              (WORD))
+            (WORD)
+            (WORD)
+            (WORD)
+            (WORD)
+            (sql_host_variable
+              (WORD))))))))
+
+================================================================================
+EXEC SQL INCLUDE in data division
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+           EXEC SQL INCLUDE SQLCA END-EXEC.
+       01 WS-FLAG PIC X.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (data_division
+      (working_storage_section
+        (exec_sql_statement
+          (sql_include
+            (WORD)))
+        (data_description
+          (level_number)
+          (entry_name
+            (WORD))
+          (picture_clause
+            (pic_string)))))))

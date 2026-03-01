@@ -1,0 +1,116 @@
+================================================================================
+EXEC CICS RETURN
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           EXEC CICS RETURN
+                     TRANSID ('CC00')
+                     COMMAREA (WS-COMMAREA)
+           END-EXEC.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (procedure_division
+      (paragraph
+        (WORD))
+      (sentence
+        (exec_cics_statement
+          (cics_return
+            (cics_option
+              (WORD)
+              (string_literal))
+            (cics_option
+              (WORD)
+              (WORD))))))))
+
+================================================================================
+EXEC CICS SEND MAP
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           EXEC CICS SEND
+                     MAP('COSGN0A')
+                     MAPSET('COSGN00')
+                     FROM(COSGN0AO)
+                     ERASE
+                     CURSOR
+           END-EXEC.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (procedure_division
+      (paragraph
+        (WORD))
+      (sentence
+        (exec_cics_statement
+          (cics_send
+            (cics_option
+              (WORD)
+              (string_literal))
+            (cics_option
+              (WORD)
+              (string_literal))
+            (cics_option
+              (WORD)
+              (WORD))
+            (cics_option
+              (WORD))
+            (cics_option
+              (WORD))))))))
+
+================================================================================
+EXEC CICS READ with options
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           EXEC CICS READ
+                DATASET   ('USRSEC')
+                INTO      (SEC-USER-DATA)
+                RIDFLD    (WS-USER-ID)
+                RESP      (WS-RESP-CD)
+           END-EXEC.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (procedure_division
+      (paragraph
+        (WORD))
+      (sentence
+        (exec_cics_statement
+          (cics_read
+            (cics_option
+              (WORD)
+              (string_literal))
+            (cics_option
+              (WORD)
+              (WORD))
+            (cics_option
+              (WORD)
+              (WORD))
+            (cics_option
+              (WORD)
+              (WORD))))))))

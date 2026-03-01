@@ -1,0 +1,73 @@
+================================================================================
+Simple data description with PIC
+================================================================================
+
+       01 WS-NAME PIC X(10).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (copybook_definition
+    (data_description
+      (level_number)
+      (entry_name
+        (WORD))
+      (picture_clause
+        (pic_string)))))
+
+================================================================================
+Level 88 with VALUE
+================================================================================
+
+       01 WS-FLAG PIC X(01) VALUE 'N'.
+          88 FLAG-ON VALUE 'Y'.
+          88 FLAG-OFF VALUE 'N'.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (copybook_definition
+    (data_description
+      (level_number)
+      (entry_name
+        (WORD))
+      (picture_clause
+        (pic_string))
+      (value_clause
+        (string_literal)))
+    (data_description
+      (level_number)
+      (entry_name
+        (WORD))
+      (value_clause
+        (string_literal)))
+    (data_description
+      (level_number)
+      (entry_name
+        (WORD))
+      (value_clause
+        (string_literal)))))
+
+================================================================================
+OCCURS clause
+================================================================================
+
+       01 WS-TABLE.
+          05 WS-ITEM PIC X(10) OCCURS 10 TIMES.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (copybook_definition
+    (data_description
+      (level_number)
+      (entry_name
+        (WORD)))
+    (data_description
+      (level_number)
+      (entry_name
+        (WORD))
+      (picture_clause
+        (pic_string))
+      (occurs_clause
+        (number_literal)))))
