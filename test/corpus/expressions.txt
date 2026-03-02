@@ -1,0 +1,143 @@
+================================================================================
+Qualified identifier with OF
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           MOVE ACCT-ID OF WS-REC TO WS-OUT.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (procedure_division
+      (paragraph
+        (WORD))
+      (sentence
+        (move_statement
+          (identifier
+            (qualified_identifier
+              (WORD)
+              (WORD)))
+          (identifier
+            (WORD)))))))
+
+================================================================================
+Subscript access
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           MOVE WS-TABLE(WS-IDX) TO WS-OUT.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (procedure_division
+      (paragraph
+        (WORD))
+      (sentence
+        (move_statement
+          (identifier
+            (WORD)
+            (subscript
+              (identifier
+                (WORD))))
+          (identifier
+            (WORD)))))))
+
+================================================================================
+Reference modification
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           MOVE WS-NAME(1:5) TO WS-OUT.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (procedure_division
+      (paragraph
+        (WORD))
+      (sentence
+        (move_statement
+          (identifier
+            (WORD)
+            (subscript
+              (number_literal)
+              (number_literal)))
+          (identifier
+            (WORD)))))))
+
+================================================================================
+LENGTH OF expression
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           MOVE LENGTH OF WS-REC TO WS-LEN.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (procedure_division
+      (paragraph
+        (WORD))
+      (sentence
+        (move_statement
+          (length_of
+            (identifier
+              (WORD)))
+          (identifier
+            (WORD)))))))
+
+================================================================================
+FUNCTION call without arguments
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           MOVE FUNCTION CURRENT-DATE TO WS-DATE.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (procedure_division
+      (paragraph
+        (WORD))
+      (sentence
+        (move_statement
+          (function_call
+            (WORD))
+          (identifier
+            (WORD)))))))

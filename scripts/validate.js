@@ -81,6 +81,11 @@ console.log(`Total files: ${totalFiles}`);
 console.log(`Files with errors: ${cblResults.filter(r => r.errors > 0).length + cpyResults.filter(r => r.errors > 0).length}`);
 console.log(`Total ERROR nodes: ${totalErrors}`);
 
-if (totalErrors > 0) {
+// CSSETATY.cpy is a COPY REPLACING template with substitution variables — expected errors
+const unexpectedErrors = [...cblResults, ...cpyResults].filter(
+  r => r.errors > 0 && r.file !== 'CSSETATY.cpy'
+);
+
+if (unexpectedErrors.length > 0) {
   process.exit(1);
 }

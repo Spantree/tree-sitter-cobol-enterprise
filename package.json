@@ -19,7 +19,8 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
-    "nan": "^2.25.0"
+    "nan": "^2.25.0",
+    "tree-sitter": "^0.20.6"
   },
   "devDependencies": {
     "tree-sitter-cli": "^0.20.8"

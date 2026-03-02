@@ -1,0 +1,43 @@
+================================================================================
+Environment division with FILE-CONTROL
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION.
+       SOURCE-COMPUTER. IBM-390.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+           SELECT ACCTFILE ASSIGN TO ACCTDAT
+               ORGANIZATION IS INDEXED
+               ACCESS MODE IS DYNAMIC
+               RECORD KEY IS ACCT-ID
+               FILE STATUS IS WS-STATUS.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           STOP RUN.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (environment_division
+      (configuration_section
+        (source_computer_paragraph
+          (WORD)))
+      (input_output_section
+        (file_control_paragraph
+          (select_statement
+            (WORD)
+            (WORD)
+            (WORD)
+            (WORD)))))
+    (procedure_division
+      (paragraph
+        (WORD))
+      (sentence
+        (stop_statement)))))

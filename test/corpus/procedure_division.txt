@@ -1,0 +1,283 @@
+================================================================================
+MOVE statement
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           MOVE WS-A TO WS-B.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (procedure_division
+      (paragraph
+        (WORD))
+      (sentence
+        (move_statement
+          (identifier
+            (WORD))
+          (identifier
+            (WORD)))))))
+
+================================================================================
+IF with ELSE and END-IF
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           IF WS-A = 1
+               MOVE 0 TO WS-B
+           ELSE
+               MOVE 1 TO WS-B
+           END-IF.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (procedure_division
+      (paragraph
+        (WORD))
+      (sentence
+        (if_statement
+          (identifier
+            (WORD))
+          (number_literal)
+          (move_statement
+            (number_literal)
+            (identifier
+              (WORD)))
+          (move_statement
+            (number_literal)
+            (identifier
+              (WORD))))))))
+
+================================================================================
+EVALUATE TRUE with WHEN and WHEN OTHER
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           EVALUATE TRUE
+               WHEN WS-FLAG = 'Y'
+                   MOVE 1 TO WS-RESULT
+               WHEN OTHER
+                   MOVE 0 TO WS-RESULT
+           END-EVALUATE.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (procedure_division
+      (paragraph
+        (WORD))
+      (sentence
+        (evaluate_statement
+          (when_clause
+            (identifier
+              (WORD))
+            (string_literal)
+            (move_statement
+              (number_literal)
+              (identifier
+                (WORD))))
+          (move_statement
+            (number_literal)
+            (identifier
+              (WORD))))))))
+
+================================================================================
+PERFORM THRU
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           PERFORM 1000-PROCESS THRU 1000-EXIT.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (procedure_division
+      (paragraph
+        (WORD))
+      (sentence
+        (perform_statement
+          (numeric_name)
+          (numeric_name))))))
+
+================================================================================
+CALL with USING BY REFERENCE and BY CONTENT
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           CALL 'SUBPGM' USING BY REFERENCE WS-AREA
+                                BY CONTENT WS-LEN
+           END-CALL.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (procedure_division
+      (paragraph
+        (WORD))
+      (sentence
+        (call_statement
+          (string_literal)
+          (identifier
+            (WORD))
+          (identifier
+            (WORD)))))))
+
+================================================================================
+GO TO, NEXT SENTENCE, and GOBACK
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           GO TO 9999-EXIT.
+           NEXT SENTENCE.
+           GOBACK.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (procedure_division
+      (paragraph
+        (WORD))
+      (sentence
+        (go_to_statement
+          (numeric_name)))
+      (sentence
+        (next_sentence_statement))
+      (sentence
+        (goback_statement)))))
+
+================================================================================
+COMPUTE with arithmetic
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           COMPUTE WS-TOTAL = WS-QTY * WS-PRICE.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (procedure_division
+      (paragraph
+        (WORD))
+      (sentence
+        (compute_statement
+          (identifier
+            (WORD))
+          (identifier
+            (WORD))
+          (identifier
+            (WORD)))))))
+
+================================================================================
+DISPLAY with multiple arguments
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           DISPLAY 'TOTAL: ' WS-AMT.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (procedure_division
+      (paragraph
+        (WORD))
+      (sentence
+        (display_statement
+          (string_literal)
+          (identifier
+            (WORD)))))))
+
+================================================================================
+Inline PERFORM UNTIL with READ AT END
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           PERFORM UNTIL WS-EOF = 'Y'
+               READ INFILE
+                   AT END
+                       SET WS-EOF TO TRUE
+               END-READ
+           END-PERFORM.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (procedure_division
+      (paragraph
+        (WORD))
+      (sentence
+        (perform_inline
+          (identifier
+            (WORD))
+          (string_literal)
+          (read_statement
+            (WORD)
+            (io_handler
+              (set_statement
+                (identifier
+                  (WORD))
+                (identifier
+                  (WORD))))))))))

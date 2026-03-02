@@ -1,0 +1,134 @@
+================================================================================
+SECTION with paragraphs
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       PROCEDURE DIVISION.
+       1000-PROCESS SECTION.
+       1000-MAIN.
+           DISPLAY 'HELLO'.
+       1000-EXIT.
+           EXIT.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (procedure_division
+      (section
+        (numeric_name))
+      (paragraph
+        (numeric_name))
+      (sentence
+        (display_statement
+          (string_literal)))
+      (paragraph
+        (numeric_name))
+      (sentence
+        (exit_statement)))))
+
+================================================================================
+EVALUATE TRUE ALSO TRUE
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           EVALUATE TRUE ALSO TRUE
+               WHEN WS-A = 1 ALSO WS-B = 2
+                   MOVE 'OK' TO WS-MSG
+               WHEN OTHER
+                   MOVE 'NO' TO WS-MSG
+           END-EVALUATE.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (procedure_division
+      (paragraph
+        (WORD))
+      (sentence
+        (evaluate_statement
+          (when_clause
+            (identifier
+              (WORD))
+            (number_literal)
+            (identifier
+              (WORD))
+            (number_literal)
+            (move_statement
+              (string_literal)
+              (identifier
+                (WORD))))
+          (move_statement
+            (string_literal)
+            (identifier
+              (WORD))))))))
+
+================================================================================
+Hex literal
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           MOVE X'00' TO WS-NULL.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (procedure_division
+      (paragraph
+        (WORD))
+      (sentence
+        (move_statement
+          (string_literal)
+          (identifier
+            (WORD)))))))
+
+================================================================================
+IF with compound condition
+================================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           IF WS-A = 1 AND WS-B = 2
+               DISPLAY 'MATCH'
+           END-IF.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (program_definition
+    (identification_division
+      (program_id_paragraph
+        (WORD)))
+    (procedure_division
+      (paragraph
+        (WORD))
+      (sentence
+        (if_statement
+          (identifier
+            (WORD))
+          (number_literal)
+          (identifier
+            (WORD))
+          (number_literal)
+          (display_statement
+            (string_literal)))))))

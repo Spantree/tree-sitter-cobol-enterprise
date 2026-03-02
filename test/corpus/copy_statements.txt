@@ -1,0 +1,40 @@
+================================================================================
+Simple COPY statement
+================================================================================
+
+       COPY CUSTCPY.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (copybook_definition
+    (copy_statement
+      (WORD))))
+
+================================================================================
+COPY with REPLACING pseudo-text
+================================================================================
+
+       01 WS-REC.
+          05 WS-NAME PIC X(10).
+       COPY ACCTCPY REPLACING ==:TAG:== BY ==CUST==.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (copybook_definition
+    (data_description
+      (level_number)
+      (entry_name
+        (WORD)))
+    (data_description
+      (level_number)
+      (entry_name
+        (WORD))
+      (picture_clause
+        (pic_string)))
+    (copy_statement
+      (WORD)
+      (replacing_clause
+        (pseudo_text)
+        (pseudo_text)))))
