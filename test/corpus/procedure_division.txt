@@ -275,7 +275,7 @@ Inline PERFORM UNTIL with READ AT END
           (string_literal)
           (read_statement
             (WORD)
-            (io_handler
+            (exception_phrase
               (set_statement
                 (identifier
                   (WORD))
