@@ -1,6 +1,6 @@
 # tree-sitter-cobol-enterprise
 
-> A [Tree-sitter](https://tree-sitter.github.io/tree-sitter/) grammar for **IBM Enterprise COBOL** — the mainframe dialect used on z/OS systems — with first-class support for EXEC CICS and EXEC SQL embedded blocks.
+A [Tree-sitter](https://tree-sitter.github.io/tree-sitter/) grammar for IBM Enterprise COBOL, the dialect used on z/OS mainframe systems, with first-class support for `EXEC CICS` and `EXEC SQL` embedded blocks.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
@@ -8,56 +8,46 @@
 
 ## Why this exists
 
-If you've ever tried to parse real-world mainframe COBOL with an off-the-shelf tool, you've probably run into this problem: most COBOL parsers treat `EXEC CICS` and `EXEC SQL` blocks as opaque blobs of unstructured text. That means any program that talks to a CICS transaction or a DB2 database — which is most of the interesting ones — produces parse errors or meaningless AST nodes.
+If you have tried to parse real-world mainframe COBOL with an off-the-shelf tool, you have probably hit the same wall. Most COBOL parsers treat `EXEC CICS` and `EXEC SQL` blocks as opaque blobs of unstructured text. Any program that talks to a CICS transaction or a DB2 database — which is most of the interesting ones — produces parse errors or meaningless AST nodes.
 
-This grammar fixes that. `EXEC CICS` and `EXEC SQL` blocks are parsed as **typed AST nodes** with structured fields, so downstream tools can actually reason about what each transaction or query is doing.
+This grammar fixes that. `EXEC CICS` and `EXEC SQL` blocks are parsed as typed AST nodes with named fields, so downstream tools can actually reason about what each transaction or query is doing. `EXEC CICS READ` is not a bag of words; it has a `DATASET`, an `INTO`, a `RIDFLD`, and an optional `RESP`. That distinction matters when you are trying to understand or migrate a program.
 
-We built this as part of [Spantree](https://spantree.net)'s AI-assisted mainframe modernization pipeline. We needed a parser that could handle the full IBM Enterprise COBOL dialect without choking on the parts that matter most.
+We built this as part of [Spantree](https://spantree.net)'s AI-assisted mainframe modernization pipeline. We needed a parser that could handle the full IBM Enterprise COBOL dialect without choking on the parts that matter most for analysis.
 
-**Validated against the [AWS CardDemo](https://github.com/aws-samples/aws-mainframe-modernization-carddemo) corpus:** 65/66 files parse cleanly (98.5%), compared to the existing npm `tree-sitter-cobol` package which produced ERROR nodes on 25 of the same 44 programs.
+Validated against the [AWS CardDemo](https://github.com/aws-samples/aws-mainframe-modernization-carddemo) corpus: 65 of 66 files parse cleanly.
 
 ---
 
 ## For the business reader
 
-Mainframe systems running COBOL are the backbone of many large enterprises — banks, insurers, railroads, retailers. Migrating them is expensive and risky, partly because most tools can't accurately read and understand the code.
+Mainframe systems running COBOL are the backbone of many large enterprises: banks, insurers, railroads, retailers. Migrating them is expensive and risky, partly because most tools cannot accurately read and understand the code.
 
-This library is a building block for tools that can. It turns raw COBOL source files into structured data — a map of what each program does, what it calls, what database tables it reads and writes, and what transactions it handles. That structured representation is what makes it possible to build automated analysis, documentation generation, and migration assistance on top of mainframe codebases.
+This library is a building block for tools that can. It turns raw COBOL source files into structured data: a map of what each program does, what it calls, what database tables it reads and writes, and what transactions it handles. That structured representation is what makes automated analysis, documentation generation, and migration tooling possible.
 
-Think of it as the difference between having a pile of documents in an unknown language versus having those documents translated into something a computer can actually reason about.
+Think of the difference between having a pile of documents in an unknown language versus having those documents accurately transcribed into something a computer can reason about. The transcription has to be right, and for IBM Enterprise COBOL, most open-source transcribers get it wrong on the parts that matter.
 
 ---
 
 ## For the engineer
 
-This is a [Tree-sitter](https://tree-sitter.github.io/tree-sitter/) grammar — the same parsing framework used in Neovim, GitHub's code search, and dozens of other developer tools. Tree-sitter produces fast, incremental, error-tolerant concrete syntax trees (CSTs) from source code.
+This is a [Tree-sitter](https://tree-sitter.github.io/tree-sitter/) grammar, the same parsing framework used in Neovim, GitHub's code search, and dozens of other developer tools. Tree-sitter produces fast, incremental, error-tolerant concrete syntax trees from source code.
 
-### What's covered
+**What is covered:**
 
-- IBM Enterprise COBOL fixed-form source (columns 1–80)
-- All four COBOL divisions: IDENTIFICATION, ENVIRONMENT, DATA, PROCEDURE
-- EXEC CICS commands as typed AST nodes with named fields (DATASET, INTO, FROM, RESP, etc.)
-- EXEC SQL statements as typed AST nodes
-- COPY/REPLACE directives, REDEFINES, level-number data definitions
-- PIC clause parsing (alphabetic, alphanumeric, numeric, COMP-3, packed decimal)
-- Nested programs and CALL statements
-- JCL-adjacent constructs (BMS map references)
+IBM Enterprise COBOL fixed-form source (columns 1 to 80). All four divisions: IDENTIFICATION, ENVIRONMENT, DATA, PROCEDURE. EXEC CICS commands as typed AST nodes with named fields (DATASET, INTO, FROM, RESP, and others). EXEC SQL statements as typed AST nodes. COPY/REPLACE directives, REDEFINES, level-number data definitions. PIC clause parsing including alphabetic, alphanumeric, numeric, COMP-3, and packed decimal. Nested programs and CALL statements.
 
-### Known gaps
+**Known gaps:**
 
-- NIST85 test suite: ~6% clean (this suite targets COBOL 85 features rarely used in enterprise z/OS code)
-- `WRITE AFTER ADVANCING` has a GLR ambiguity in some edge cases
-- Intrinsic FUNCTION calls are partially supported
-- Free-form COBOL dialect is not supported (fixed-form only)
+The [NIST COBOL 85 test suite](https://www.itl.nist.gov/div897/ctg/cobol_form.htm) (6.3% clean) targets features rarely used in enterprise z/OS shops. `WRITE AFTER ADVANCING` has a GLR ambiguity in some edge cases. Intrinsic FUNCTION calls are partially supported. Free-form COBOL dialect is not supported.
 
-### Architecture
+**Architecture:**
 
 ```
 grammar.js          Main grammar — all syntax rules
-src/scanner.c       External scanner — handles column-position rules, comment lines, continuations
+src/scanner.c       External scanner — column-position rules, comment lines, continuations
 src/parser.c        AUTO-GENERATED by tree-sitter generate — do not edit
 bindings/node/      Node.js native binding (nan-based, tree-sitter 0.20.x)
-test/corpus/        Tree-sitter test cases (one .txt per concern area)
+test/corpus/        Tree-sitter test cases (one .txt file per concern area)
 scripts/validate.js Parses a corpus directory and reports ERROR node counts
 ```
 
@@ -65,13 +55,7 @@ scripts/validate.js Parses a corpus directory and reports ERROR node counts
 
 ## Getting started
 
-### Prerequisites
-
-- [Node.js](https://nodejs.org/) 18+
-- [tree-sitter CLI](https://tree-sitter.github.io/tree-sitter/creating-parsers#installation): `npm install -g tree-sitter-cli`
-- node-gyp (for native bindings): `npm install -g node-gyp`
-
-### Install
+**Prerequisites:** [Node.js](https://nodejs.org/) 18 or later, the [tree-sitter CLI](https://tree-sitter.github.io/tree-sitter/creating-parsers#installation) (`npm install -g tree-sitter-cli`), and node-gyp (`npm install -g node-gyp`).
 
 ```bash
 git clone https://github.com/Spantree/tree-sitter-cobol-enterprise
@@ -80,27 +64,25 @@ npm install
 npm run build
 ```
 
-### Run the test suite
+Run the test suite:
 
 ```bash
 npm test
-# or
-npx tree-sitter test
 ```
 
-### Parse a file
+Parse a file:
 
 ```bash
 npx tree-sitter parse path/to/program.cbl
 ```
 
-### Validate a corpus
+Validate a corpus directory:
 
 ```bash
 node scripts/validate.js /path/to/cobol/directory
 ```
 
-### Use in Node.js
+Use in Node.js:
 
 ```javascript
 const Parser = require('tree-sitter');
@@ -109,15 +91,14 @@ const COBOL = require('./bindings/node');
 const parser = new Parser();
 parser.setLanguage(COBOL);
 
-const source = `
+const tree = parser.parse(`
        IDENTIFICATION DIVISION.
        PROGRAM-ID. HELLO.
        PROCEDURE DIVISION.
            DISPLAY 'HELLO WORLD'.
            STOP RUN.
-`;
+`);
 
-const tree = parser.parse(source);
 console.log(tree.rootNode.toString());
 ```
 
@@ -125,38 +106,35 @@ console.log(tree.rootNode.toString());
 
 ## Validation results
 
-Tested against four corpora:
-
 | Corpus | Files | Clean | ERROR nodes |
 |--------|-------|-------|-------------|
-| [AWS CardDemo](https://github.com/aws-samples/aws-mainframe-modernization-carddemo) | 66 | **98.5%** | 2 |
+| [AWS CardDemo](https://github.com/aws-samples/aws-mainframe-modernization-carddemo) | 66 | 98.5% | 2 |
 | [NIST COBOL 85](https://www.itl.nist.gov/div897/ctg/cobol_form.htm) | 459 | 6.3% | 15,878 |
-| Legacy bench (enterprise samples) | 62 | 62.9% | 120 |
+| Legacy enterprise samples | 62 | 62.9% | 120 |
 | z Open Editor samples | 9 | 66.7% | 46 |
 
-**CardDemo is the target corpus.** NIST85 tests obscure COBOL 85 features not commonly found in enterprise z/OS shops. The legacy bench and z Open Editor numbers reflect ongoing work.
+CardDemo is the primary target corpus. NIST85 tests COBOL 85 features not commonly found in enterprise z/OS shops. The legacy and z Open Editor numbers reflect ongoing work.
 
 ---
 
 ## Relationship to other projects
 
-- **[tree-sitter-cobol](https://github.com/yutaro-sakamoto/tree-sitter-cobol)** (npm) — The most widely used open-source COBOL grammar for Tree-sitter. Doesn't handle EXEC CICS/SQL blocks as structured nodes; they fall through as `ERROR` sequences. This project addresses that gap specifically for the IBM Enterprise dialect.
-- **[AWS Mainframe Modernization](https://aws.amazon.com/mainframe-modernization/)** — AWS's managed migration service. Their transform pipeline generates Java but requires the proprietary BluAge runtime. This grammar is designed to feed open-source analysis tooling.
+**[tree-sitter-cobol](https://github.com/yutaro-sakamoto/tree-sitter-cobol)** by Yutaro Sakamoto is the most widely used open-source COBOL grammar for Tree-sitter, and this project derives from it. The upstream grammar does not handle EXEC CICS and EXEC SQL blocks as structured nodes; they fall through as ERROR sequences. This project addresses that gap specifically for the IBM Enterprise COBOL dialect. Per the terms of the upstream MIT license, attribution is preserved in [LICENSE](LICENSE).
+
+**[AWS Mainframe Modernization](https://aws.amazon.com/mainframe-modernization/)** is AWS's managed migration service. Their transform pipeline generates Java but requires the proprietary BluAge runtime. This grammar is designed to feed open-source analysis tooling that produces portable output.
 
 ---
 
 ## Contributing
 
-Issues and pull requests welcome. The most impactful areas for contribution:
-
-1. Expanding EXEC CICS command coverage (see `grammar.js` — new commands follow the existing pattern)
-2. Improving NIST85 compatibility for any features relevant to enterprise COBOL
-3. Adding test corpus files for edge cases you encounter in real programs
+Issues and pull requests welcome. The highest-impact areas are expanding EXEC CICS command coverage (new commands follow the existing pattern in `grammar.js`), improving NIST85 compatibility for features that appear in real enterprise code, and adding test corpus files for edge cases you encounter in production programs.
 
 ---
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE).
+
+This project is a derivative of [tree-sitter-cobol](https://github.com/yutaro-sakamoto/tree-sitter-cobol) by Yutaro Sakamoto, also MIT licensed. Original copyright and license text are preserved in [LICENSE](LICENSE).
 
 Built by [Spantree Technology Group](https://spantree.net), a [Trifork](https://trifork.com) company.
