@@ -1,0 +1,81 @@
+direction: right
+
+title: {
+  label: Phase 3: Incremental Translation
+  near: top-center
+  style.font-size: 18
+  style.bold: true
+}
+
+wave_in: Next Wave {
+  shape: step
+  style.fill: "#FEF5E4"
+  style.stroke: "#F39C12"
+  tooltip: "Select next batch of programs from wave plan"
+}
+
+translate: Translate Module {
+  shape: step
+  style.fill: "#FEF5E4"
+  style.stroke: "#F39C12"
+  tooltip: "COBOL → Java with explicit BigDecimal arithmetic, GO TO elimination, CICS transactions → Spring Boot services, BMS maps → React"
+}
+
+parallelrun: Parallel Run {
+  shape: step
+  style.fill: "#FEF5E4"
+  style.stroke: "#F39C12"
+  tooltip: "Target system runs alongside mainframe. Same inputs fed to both. Outputs captured and compared."
+}
+
+match: Behavioral Match? {
+  shape: diamond
+  style.fill: "#FEF5E4"
+  style.stroke: "#F39C12"
+}
+
+edgecases: Investigate Divergence {
+  shape: step
+  style.fill: "#FADBD8"
+  style.stroke: "#E74C3C"
+  tooltip: "Common culprits: date handling edge cases, packed decimal rounding, COMP-3 encoding, REDEFINES semantics"
+}
+
+cicd: CI/CD Pipeline {
+  shape: step
+  style.fill: "#D5F5E3"
+  style.stroke: "#27AE60"
+  tooltip: "All translated code enters a delivery pipeline immediately. No manual deployments. Automated regression tests run on every commit."
+}
+
+more: More waves? {
+  shape: diamond
+  style.fill: "#FEF5E4"
+  style.stroke: "#F39C12"
+}
+
+done: Phase 4 {
+  shape: step
+  style.fill: "#EBD5FB"
+  style.stroke: "#8E44AD"
+}
+
+wave_in -> translate
+translate -> parallelrun
+parallelrun -> match
+match -> edgecases: No {
+  style.stroke: "#E74C3C"
+}
+edgecases -> translate: fix & retry {
+  style.stroke: "#E74C3C"
+}
+match -> cicd: Yes {
+  style.stroke: "#27AE60"
+}
+cicd -> more
+more -> wave_in: Yes — next wave {
+  style.stroke: "#F39C12"
+}
+more -> done: No — all waves complete {
+  style.stroke: "#27AE60"
+}

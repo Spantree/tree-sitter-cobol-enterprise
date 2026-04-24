@@ -1,0 +1,48 @@
+direction: right
+
+title: {
+  label: AI-Assisted Mainframe Migration — Overview
+  near: top-center
+  style.font-size: 18
+  style.bold: true
+}
+
+p1: Phase 1\nComprehension {
+  style.fill: "#D6EAF8"
+  style.stroke: "#2980B9"
+  style.border-radius: 8
+  style.font-size: 14
+  style.bold: true
+  shape: rectangle
+}
+
+p2: Phase 2\nPlanning {
+  style.fill: "#D5F5E3"
+  style.stroke: "#27AE60"
+  style.border-radius: 8
+  style.font-size: 14
+  style.bold: true
+  shape: rectangle
+}
+
+p3: Phase 3\nIncremental Translation {
+  style.fill: "#FEF5E4"
+  style.stroke: "#F39C12"
+  style.border-radius: 8
+  style.font-size: 14
+  style.bold: true
+  shape: rectangle
+}
+
+p4: Phase 4\nCutover {
+  style.fill: "#EBD5FB"
+  style.stroke: "#8E44AD"
+  style.border-radius: 8
+  style.font-size: 14
+  style.bold: true
+  shape: rectangle
+}
+
+p1 -> p2: knowledge graph
+p2 -> p3: ordered wave plan\n+ test suite
+p3 -> p4: validated modules\nvia CI/CD

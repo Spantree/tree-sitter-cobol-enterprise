@@ -1,0 +1,62 @@
+direction: right
+
+title: {
+  label: Phase 2: Planning
+  near: top-center
+  style.font-size: 18
+  style.bold: true
+}
+
+kg_in: Knowledge Graph {
+  shape: cylinder
+  style.fill: "#AED6F1"
+  style.stroke: "#2980B9"
+  tooltip: "Input from Phase 1"
+}
+
+migorder: Migration Sequence {
+  shape: step
+  style.fill: "#D5F5E3"
+  style.stroke: "#27AE60"
+  tooltip: "Dependency-ordered wave plan. Start with low-complexity, low-coupling leaf programs. Each wave is a deployable unit."
+}
+
+testgen: Test Case Generation {
+  shape: step
+  style.fill: "#D5F5E3"
+  style.stroke: "#27AE60"
+  tooltip: "Capture I/O from production runs → regression test suite. Must exist before any code changes."
+}
+
+stack: Target Stack Selection {
+  shape: step
+  style.fill: "#D5F5E3"
+  style.stroke: "#27AE60"
+  tooltip: "Java 21 + Spring Boot 3 + PostgreSQL + GraphQL + React (or client's preferred stack)"
+}
+
+nodata: No I/O Data Available {
+  shape: oval
+  style.fill: "#FADBD8"
+  style.stroke: "#E74C3C"
+  tooltip: "Programs with no production data require manual spec writing before translation can begin"
+}
+
+waveplan: Wave Plan {
+  shape: document
+  style.fill: "#A9DFBF"
+  style.stroke: "#27AE60"
+  tooltip: "Ordered list of migration waves — each wave is a set of programs that can be translated and deployed together"
+}
+
+kg_in -> migorder
+migorder -> testgen
+migorder -> stack
+testgen -> nodata: no production runs captured {
+  style.stroke: "#E74C3C"
+  style.stroke-dash: 4
+}
+testgen -> waveplan: test suite ready {
+  style.stroke: "#27AE60"
+}
+stack -> waveplan

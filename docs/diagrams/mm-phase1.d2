@@ -1,0 +1,87 @@
+direction: right
+
+title: {
+  label: Phase 1: Comprehension
+  near: top-center
+  style.font-size: 18
+  style.bold: true
+}
+
+ingest: Ingest Source Estate {
+  shape: step
+  style.fill: "#D6EAF8"
+  style.stroke: "#2980B9"
+  tooltip: "Pull COBOL, copybooks, JCL, BMS maps, DDL from mainframe or SCM"
+}
+
+parse: AST Parsing {
+  shape: step
+  style.fill: "#D6EAF8"
+  style.stroke: "#2980B9"
+  tooltip: "Custom tree-sitter grammar for IBM Enterprise COBOL — EXEC CICS/SQL as first-class typed nodes. CardDemo: 98.5% clean."
+}
+
+inventory: Inventory {
+  shape: step
+  style.fill: "#D6EAF8"
+  style.stroke: "#2980B9"
+  tooltip: "Every file classified: program type, LOC, CICS usage, batch vs. online. 179 files in under a minute on CardDemo."
+}
+
+depgraph: Dependency Graph {
+  shape: step
+  style.fill: "#D6EAF8"
+  style.stroke: "#2980B9"
+  tooltip: "CALL chains, COPY references, CICS LINK/XCTL — full blast-radius map per program"
+}
+
+deadcode: Dead Code Detection {
+  shape: diamond
+  style.fill: "#FADBD8"
+  style.stroke: "#E74C3C"
+  tooltip: "CardDemo: 14/44 programs unreachable from entry points (32%). Prune before migration begins."
+}
+
+complexity: Complexity Scoring {
+  shape: step
+  style.fill: "#D6EAF8"
+  style.stroke: "#2980B9"
+  tooltip: "6 dimensions: control flow, cyclomatic complexity, data coupling, DB interaction, integration, batch. CardDemo avg: 2.19/5."
+}
+
+llmdoc: LLM-Assisted Documentation {
+  shape: step
+  style.fill: "#D6EAF8"
+  style.stroke: "#2980B9"
+  tooltip: "Plain-English summaries of program intent at function + module level. Human review essential."
+}
+
+kg: Knowledge Graph {
+  shape: cylinder
+  style.fill: "#AED6F1"
+  style.stroke: "#2980B9"
+  tooltip: "Durable record: what each program does, what it depends on, what breaks if you touch it"
+}
+
+hitl: Human Review Required {
+  shape: oval
+  style.fill: "#FADBD8"
+  style.stroke: "#E74C3C"
+  tooltip: "Programs with no surviving institutional knowledge and no production I/O data — cannot be safely automated"
+}
+
+ingest -> parse
+parse -> inventory
+parse -> depgraph
+inventory -> complexity
+depgraph -> deadcode
+complexity -> llmdoc
+llmdoc -> kg
+depgraph -> kg
+deadcode -> hitl: no entry point\nor no I/O data {
+  style.stroke: "#E74C3C"
+  style.stroke-dash: 4
+}
+deadcode -> complexity: reachable programs {
+  style.stroke: "#27AE60"
+}

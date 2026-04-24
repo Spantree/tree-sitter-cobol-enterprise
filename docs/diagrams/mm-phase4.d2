@@ -1,0 +1,94 @@
+direction: right
+
+title: {
+  label: Phase 4: Cutover
+  near: top-center
+  style.font-size: 18
+  style.bold: true
+}
+
+ready: All Waves Validated {
+  shape: step
+  style.fill: "#EBD5FB"
+  style.stroke: "#8E44AD"
+  tooltip: "All program waves have passed parallel-run validation and are in the delivery pipeline"
+}
+
+traffic: Shift Traffic {
+  shape: step
+  style.fill: "#EBD5FB"
+  style.stroke: "#8E44AD"
+  tooltip: "Route production traffic to the modern stack — wave by wave, not all at once"
+}
+
+monitor: Monitor {
+  shape: step
+  style.fill: "#EBD5FB"
+  style.stroke: "#8E44AD"
+  tooltip: "Compare error rates, latency, business metrics between old and new stack. Run in parallel until confidence is high."
+}
+
+ok: All Clear? {
+  shape: diamond
+  style.fill: "#EBD5FB"
+  style.stroke: "#8E44AD"
+}
+
+rollback: Rollback Wave {
+  shape: step
+  style.fill: "#FADBD8"
+  style.stroke: "#E74C3C"
+  tooltip: "Route traffic back to mainframe. Investigate divergence. Re-enter translation loop."
+}
+
+retire: Retire Mainframe Program {
+  shape: step
+  style.fill: "#D5F5E3"
+  style.stroke: "#27AE60"
+  tooltip: "Decommission the COBOL program. Remove from JCL. Update dependency registries."
+}
+
+hybrid: Hybrid Coexistence {
+  shape: step
+  style.fill: "#EBD5FB"
+  style.stroke: "#8E44AD"
+  tooltip: "Some programs stay on mainframe longer — contractual SLAs, regulatory holds, or deferred waves. REST/MQ APIs bridge old and new."
+}
+
+more: More programs? {
+  shape: diamond
+  style.fill: "#EBD5FB"
+  style.stroke: "#8E44AD"
+}
+
+decommission: Full Mainframe Decommission {
+  shape: step
+  style.fill: "#A9DFBF"
+  style.stroke: "#27AE60"
+  tooltip: "Final retirement of mainframe LPAR. Infrastructure savings realized."
+}
+
+ready -> traffic
+traffic -> monitor
+monitor -> ok
+ok -> rollback: No {
+  style.stroke: "#E74C3C"
+}
+rollback -> traffic: re-deploy fixed wave {
+  style.stroke: "#E74C3C"
+}
+ok -> retire: Yes {
+  style.stroke: "#27AE60"
+}
+ok -> hybrid: deferred / constrained {
+  style.stroke: "#8E44AD"
+  style.stroke-dash: 4
+}
+retire -> more
+hybrid -> more
+more -> traffic: Yes — next program {
+  style.stroke: "#8E44AD"
+}
+more -> decommission: No — all done {
+  style.stroke: "#27AE60"
+}
